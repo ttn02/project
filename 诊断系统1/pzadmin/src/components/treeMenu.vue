@@ -1,5 +1,5 @@
 <template>
-    <el-sub-menu index="1">
+    <!-- <el-sub-menu index="1">
           <template #title>
             <el-icon><location /></el-icon>
             <span>Navigator One</span>
@@ -23,16 +23,23 @@
         <el-menu-item index="3" disabled>
           <el-icon><document /></el-icon>
           <span>Navigator Three</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <el-icon><setting /></el-icon>
-          <span>Navigator Four</span>
-        </el-menu-item>
+        </el-menu-item> -->
+        <template v-for="(item,index) in props.menuData">
+            <el-menu-item 
+            v-if="!item.children || item.children.length==0" 
+            :index="`${props.index}-${item.meta.in}`"
+            :key="`${props.index}-${item.meta.in}`">
+              <el-icon><setting /></el-icon>
+              <span>Navigator Four</span>
+          </el-menu-item>
+        </template>
+        
   
 </template>
 
 <script setup>
-
+const props = defineProps(['menuData'])
+console.log(props,'props')
 </script>
 
 <style scoped>
