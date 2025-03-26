@@ -5,7 +5,7 @@ const user = useUserStore();
 </script>
 
 <template>
-    <div class="text-xs text-red-">
+    <div class="text-red-500">
         ttn课堂
     </div>
     <span>{{ user.token }}</span>
