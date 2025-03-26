@@ -9,5 +9,7 @@ const user = useUserStore();
         ttn课堂
     </div>
     <span>{{ user.token }}</span>
+    <br>
+    <el-button type="primary"> 登录 </el-button>
 
 </template>
