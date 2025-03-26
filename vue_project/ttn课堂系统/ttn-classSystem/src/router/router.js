@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory} from 'vue-router'
 
-
 const routes = [
     {
         path: '/',
@@ -9,7 +8,6 @@ const routes = [
     {
         path: '/home',
         component: () => import("../pages/home.vue")
-
     }
 ]
 
