@@ -8,7 +8,7 @@ import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import "../src/tailwindcss.css" 
+import "./tailwindcss.css" 
 
 const app = createApp(App)
 const pinia = createPinia()
