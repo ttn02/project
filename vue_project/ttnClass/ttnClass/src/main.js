@@ -8,7 +8,11 @@ import { createPinia } from 'pinia'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import "./tailwindcss.css" 
+// 配置tailwindcss
+import './tailwindcss.css'
+
+
+
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -20,5 +24,8 @@ Object.keys(ElementPlusIconsVue).forEach((keys) => {
 
 
 
-app.use(router).use(pinia).use(ElementPlus)
+app.use(pinia)
+app.use(router)
+app.use(ElementPlus)
+
 app.mount('#app')
