@@ -37,23 +37,36 @@
             <a href="#">兑换码</a>
             <a href="#">云服务器</a>
         </div>
-        <div>
-            <el-button link size="large" @click="login">登录</el-button>
-            <el-button link size="large" @click="register">注册</el-button>
+        <div v-if="!user.isLogin">
+            <el-button link size="large" @click="modal.switchLoginVisible">登录</el-button>
+            <el-button link size="large" @click="modal.switchRegVisible">注册</el-button>
         </div>
+        <div v-else>
+            <el-popconfirm titile="退出登录" @confirm="user.logout">
+                <template #reference>
+                    <el-button>{{ user.users.account }}</el-button>
+                </template>
+            </el-popconfirm>
+
+        </div>
+        <Register />
     </div>
 
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { ArrowDownBold, Search } from "@element-plus/icons-vue"
+import { ref } from 'vue';
+import { ArrowDownBold, Search } from "@element-plus/icons-vue";
+import Register from './Register.vue';
+import { useModalStore } from '@/store/modal.js';
+import { useUserStore } from '@/store/user.js';
 
-const input = ref("")
+const input = ref("");
 
-const login = () => { }
-const register = () => { }
-
+const login = () => { };
+const register = () => { };
+const modal = useModalStore();
+const user = useUserStore();
 </script>
 
 <style scoped></style>
