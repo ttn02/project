@@ -42,7 +42,7 @@
             <el-button link size="large" @click="modal.switchRegVisible">注册</el-button>
         </div>
         <div v-else>
-            <el-popconfirm titile="退出登录" @confirm="user.logout">
+            <el-popconfirm title="是否确认退出登录" @confirm="user.logout">
                 <template #reference>
                     <el-button>{{ user.users.account }}</el-button>
                 </template>
@@ -50,6 +50,7 @@
 
         </div>
         <Register />
+        <Login />
     </div>
 
 </template>
@@ -58,6 +59,7 @@
 import { ref } from 'vue';
 import { ArrowDownBold, Search } from "@element-plus/icons-vue";
 import Register from './Register.vue';
+import Login from './Login.vue';
 import { useModalStore } from '@/store/modal.js';
 import { useUserStore } from '@/store/user.js';
 

@@ -33,7 +33,7 @@
     </el-dialog>
 </template>
 
-<script>
+<script setup>
 import { ref } from "vue";
 import { useModalStore } from '@/store/modal.js';
 import { useUserStore } from '@/store/user.js';

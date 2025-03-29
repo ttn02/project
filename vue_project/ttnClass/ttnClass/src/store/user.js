@@ -9,7 +9,7 @@ export const useUserStore = defineStore(
     // 当前用户名称
     const currentUser = ref("");
     // 是否登录
-    const isLogin = ref("xdclass_uesr_is_login" === "true" ? true : false);
+    const isLogin = ref("xdclass_user_is_login" === "true" ? true : false);
     // 注册用户信息
     const users = ref({
       account: "ttn",
@@ -34,8 +34,6 @@ export const useUserStore = defineStore(
 
     // 退出登录
     const logout = () => {
-      localStorage.removeItem("xdclass_uesr_is_login");
-      localStorage.removeItem("xdclass_user_current_user");
       isLogin.value = false;
       currentUser.value = "";
     };
@@ -43,8 +41,14 @@ export const useUserStore = defineStore(
     // 注册更新用户信息
     const register = (account, password) => {
       users.value = { account, password };
-      localStorage.setItem("xdclass_vue_users", JSON.stringify(users));
-      localStorage.removeItem("xdclass_uesr_is_login", "true");
+      localStorage.setItem(
+        "xdclass_vue_users",
+        JSON.stringify({
+          account,
+          password,
+        })
+      );
+      localStorage.removeItem("xdclass_user_is_login", "true");
       isLogin.value = true;
     };
     return { currentUser, isLogin, users, login, register };
