@@ -38,6 +38,5 @@
 // import { useUserStore } from "../store/user.js"
 // const user = useUserStore()
 import Header from '@/components/Header.vue'
-import Register from '@/components/Register.vue'
 
 </script>
