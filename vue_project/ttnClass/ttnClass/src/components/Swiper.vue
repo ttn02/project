@@ -1,6 +1,6 @@
 <template>
     <!-- 走马灯 -->
-    <el-carousel :interval="3000" arrow="always" :style="{ height: '300px', width: '800px' }" indicator-position="none">
+    <el-carousel :interval="3000" arrow="always" :style="{ height: '380px', width: '800px' }" indicator-position="none">
         <el-carousel-item>
             <img class="rounded" src="https://file.xdclass.net/video/2023/banner/618/HD.png">
         </el-carousel-item>
@@ -26,12 +26,12 @@
     text-align: center;
 }
 
-::v-deep .el-carousel__item {
+:deep(.el-carousel__item) {
     height: 380px !important;
 
 }
 
-::v-deep .el-carousel__container {
+:deep(.el-carousel__container) {
     background-color: white !important;
 
 }
