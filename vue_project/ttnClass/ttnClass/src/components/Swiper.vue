@@ -13,7 +13,6 @@
         <el-carousel-item>
             <img class="rounded" src="../images/1.jpg">
         </el-carousel-item>
-
     </el-carousel>
 </template>
 <script setup>
