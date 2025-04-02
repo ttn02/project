@@ -11,7 +11,7 @@
         <!-- 课程产品列表 -->
         <div class=" flex items-center">
             <div class="mt-3 flex gap-5">
-                <Card v-for="item in props.productList" :key="index" :card="item" />
+                <Card v-for="item in props.productList" :key="item.id" :card="item" />
 
             </div>
         </div>

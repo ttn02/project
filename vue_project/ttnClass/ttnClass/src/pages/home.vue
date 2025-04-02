@@ -25,9 +25,8 @@
 
             </div>
             <!-- 高单价导航 -->
-            <CourseList />
             <!-- 课程分类列表 -->
-            <Card />
+            <CourseList />
 
         </div>
         <!-- 底部的内容导航 -->
@@ -44,7 +43,6 @@ import Header from '@/components/Header.vue';
 import Classify from '../components/Classify.vue';
 import Swiper from '../components/Swiper.vue';
 import UserOrUnlogin from '../components/UserOrUnlogin.vue';
-import Card from '../components/Card.vue';
 import CourseList from '../components/CourseList.vue';
 
 </script>

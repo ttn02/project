@@ -23,7 +23,7 @@
                     <el-icon>
                         <User />
                     </el-icon>
-                    {{ card.uv }}
+                    {{ props.card.uv }}
                 </span>
                 <div class="flex items-center justify-center">
                     <div class="c-#aaa">
@@ -42,6 +42,7 @@
 
 </template>
 <script setup>
+import { User } from "@element-plus/icons-vue";
 const props = defineProps(['card']);
 const convertLevel = (level) => {
     switch (level) {

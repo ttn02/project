@@ -65,8 +65,6 @@ import { useUserStore } from '@/store/user.js';
 
 const input = ref("");
 
-const login = () => { };
-const register = () => { };
 const modal = useModalStore();
 const user = useUserStore();
 </script>
