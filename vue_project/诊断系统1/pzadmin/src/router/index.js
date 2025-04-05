@@ -5,8 +5,8 @@ import  Login  from  '../views/login/index.vue'
 import Admin from '../views/auth/admin/index.vue'
 import Group from '../views/auth/group/index.vue'
 import Order from '../views/vppz/order/index.vue'
-import Dashboard from '../views/dashboard/index.vue'
 import Staff from '../views/vppz/staff/index.vue'
+import Dashboard from '../views/dashboard/index.vue'
 
 const routes = [
     { 
@@ -38,6 +38,7 @@ const routes = [
           children: [
             {
               path: '',
+              // alias 用于设置别名，可以匹配到多个路由（默认父路由的子路由,类似于重定位）
               alias: ['admin'],
               meta: { id: '1', name: '账号管理', icon: 'Avatar', path: '/auth/admin', describe: '管理员可以进行编辑，权限修改后需要登出才会生效' },
               component: Admin
@@ -51,7 +52,7 @@ const routes = [
         },
         {
           path: 'vppz',
-          meta: { id: '3', name: 'DIDI陪诊', icon: 'BellFilled' },
+          meta: { id: '3', name: 'TTN陪诊', icon: 'BellFilled' },
           children: [
             {
               path: '',
