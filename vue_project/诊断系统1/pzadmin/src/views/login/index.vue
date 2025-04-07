@@ -1,13 +1,159 @@
 <template>
-    <div>
-      <el-button>Default</el-button>
-      <el-button type="primary">Primary</el-button>
-      <el-button type="success">Success</el-button>
-      <el-button type="info">Info</el-button>
-      <el-button type="warning">Warning</el-button>
-      <el-button type="danger">Danger</el-button>
-    </div>
+  <el-row
+    class="login-container"
+    justify="center"
+    align="middle"
+  >
+    <el-card style="max-width: 480px">
+      <template #header>
+        <div class="card-header">
+          <img
+            :src="imgUrl"
+            alt=""
+          >
+        </div>
+      </template>
+      <div class="jump-link">
+        <el-link
+          type="primary"
+          @click="handleChange"
+        >
+          {{ formType ? '返回登录' : '注册账号' }}
+        </el-link>
+      </div>
+      <el-form
+        :model="loginForm"
+        style="max-width: 600px"
+        class="demo-ruleForm"
+      >
+        <el-form-item prop="userName">
+          <el-input
+            v-model="loginForm.userName"
+            placeholder="手机号"
+            :prefix-icon="UserFilled"
+          />
+        </el-form-item>
+        <el-form-item prop="passWord">
+          <el-input
+            v-model="loginForm.passWord"
+            placeholder="密码"
+            type="password"
+            :prefix-icon="Lock"
+          />
+        </el-form-item>
+        <el-form-item
+          v-if="formType"
+          prop="validCode"
+        >
+          <el-input
+            v-model="loginForm.validCode"
+            placeholder="验证码"
+            :prefix-icon="Lock"
+          >
+            <template #append>
+              <span
+                class="send-code"
+                @click="countdownChange"
+              >
+                {{ countdown.validText }}
+              </span>
+            </template>
+          </el-input>
+        </el-form-item>
+      </el-form>
+    </el-card>
+
+  </el-row>
 </template>
 <script setup>
+import { UserFilled } from '@element-plus/icons-vue'
+import { ref, reactive } from 'vue'
+
+// 通过vite插件动态获取图片路径（官方文档：https://cn.vite.dev/guide/assets.html#importing-asset-as-url）
+const imgUrl = new URL('../../../public/login-head.png', import.meta.url).href
+
+// 切换表单(0注册，1登录)
+const formType = ref(0)
+
+// 表单数据,对应后端接口参数
+const loginForm = reactive({
+  userName: '',
+  passWord: '',
+  validCode: ''
+
+})
+
+// 发送验证码，进行倒计时
+const countdown = reactive({
+  validText: '获取验证码',
+  time: 60,
+})
+
+// 定义flag变量，检测用户是否点击了获取验证码
+let flag = false
+
+const countdownChange = () => {
+  // 防止重复点击
+  if (flag) {
+    return
+  }
+
+  //判断手机号格式是否正确（正则表达式）
+  const phoneReg = /^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/
+  if (!loginForm.userName || !phoneReg.test(loginForm.userName)) {
+    return ElMessage({
+      message: '请输入正确的手机号',
+      type: 'warning',
+    })
+  }
+
+  // 倒计时，定时器
+  const intervalID = setInterval(() => {
+    if (countdown.time <= 0) {
+      countdown.validText = '获取验证码'
+      countdown.time = 60
+      // 完成倒计时，清除定时器
+      clearInterval(intervalID);
+      // 倒计时结束之后，重置flag
+      flag = false
+    } else {
+      countdown.time -= 1
+      countdown.validText = `剩余${countdown.time}秒`
+    }
+  }, 1000)
+  flag = true
+}
+
+// 切换注册和登录
+const handleChange = () => {
+  formType.value = formType.value ? 0 : 1
+}
 
 </script>
+<style lang="less" scoped>
+:deep(.el-card__header) {
+  padding: 0;
+}
+
+.login-container {
+  height: 100%;
+
+  .card-header {
+    background-color: #899fe1;
+
+    img {
+      width: 430px;
+    }
+  }
+
+  .jump-link {
+    text-align: right;
+    margin-bottom: 10px;
+  }
+}
+
+.send-code:hover {
+  cursor: pointer;
+
+}
+</style>
