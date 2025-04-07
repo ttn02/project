@@ -25,6 +25,7 @@
         :model="loginForm"
         style="max-width: 600px"
         class="demo-ruleForm"
+        :rules="rules"
       >
         <el-form-item prop="userName">
           <el-input
@@ -59,6 +60,16 @@
               </span>
             </template>
           </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            type="primary"
+            :style="{ width: '100%' }"
+            @click="submitForm"
+          >
+            {{ formType ? '立即注册' : '立即登录' }}
+
+          </el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -128,6 +139,46 @@ const countdownChange = () => {
 const handleChange = () => {
   formType.value = formType.value ? 0 : 1
 }
+
+// 账号校验规则
+const validateUser = (rule, value, callback) => {
+  // 账号不为空
+  if (value === '') {
+    callback(new Error('请输入账号'))
+  } else {
+    const phoneReg = /^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/
+    phoneReg.test(value) ? callback() : callback(new Error('手机号格式不对,请输入正确的手机号'))
+  }
+}
+// 密码校验规则
+const validatePass = (rule, value, callback) => {
+  // 密码不为空
+  if (value === '') {
+    callback(new Error('请输入密码'))
+  } else {
+    const reg = /^[a-zA-Z0-9_-]{4,16}$/
+    reg.test(value) ? callback() : callback(new Error('密码格式不对,需要4到16位字符,请使用字母、数字、下划线或减号'))
+  }
+}
+// 表单校验规则
+const rules = reactive({
+  userName: [
+    {
+      validator: validateUser,
+      // 失去焦点时触发校验，触发的时候会调上一行的函数
+      trigger: 'blur'
+    }
+  ],
+  passWord: [
+    {
+      validator: validatePass,
+      // 失去焦点时触发校验，触发的时候会调上一行的函数
+      trigger: 'blur'
+    }
+  ]
+})
+
+const submitForm = () => { }
 
 </script>
 <style lang="less" scoped>
