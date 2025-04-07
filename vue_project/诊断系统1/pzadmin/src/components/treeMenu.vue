@@ -43,18 +43,28 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 const props = defineProps(['menuData', 'index'])
 // console.log('props@@@@@@@@@@@@@@@', props)
 
 // 路由跳转功能
 const router = useRouter()
+
+// 全局状态管理
+const store = useStore()
+
 // 点击 menu-item 实现路由跳转功能
 const handleClick = (item, active) => {
   // console.log('item@@@@@@@@@@', item)
+  // 把item的meta数据传到addMenu方法，在store中添加menu信息
+  store.commit('addMenu', item.meta)
   router.push(item.meta.path)
-
 }
+
+
+
+
 </script>
 
 <style scoped></style>
