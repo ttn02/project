@@ -77,9 +77,12 @@
   </el-row>
 </template>
 <script setup>
-import { UserFilled } from '@element-plus/icons-vue'
+import { UserFilled, Lock } from '@element-plus/icons-vue'
 import { ref, reactive } from 'vue'
+import { getCode } from '../../api'
+import { ElMessage } from 'element-plus'
 
+// console.log('@@@@@@@@@@@ElMessage', ElMessage.success('成功'))
 // 通过vite插件动态获取图片路径（官方文档：https://cn.vite.dev/guide/assets.html#importing-asset-as-url）
 const imgUrl = new URL('../../../public/login-head.png', import.meta.url).href
 
@@ -103,6 +106,7 @@ const countdown = reactive({
 // 定义flag变量，检测用户是否点击了获取验证码
 let flag = false
 
+// 验证码部分
 const countdownChange = () => {
   // 防止重复点击
   if (flag) {
@@ -133,6 +137,18 @@ const countdownChange = () => {
     }
   }, 1000)
   flag = true
+  // 用于发送验证码
+  getCode({
+    tel: loginForm.userName
+  }).then(({ data }) => {
+    console.log('@@@@@@@@@@@data', data)
+    if (data.code === 10000) {
+      ElMessage({
+        message: '请输入正确的手机号',
+        type: 'warning',
+      })
+    }
+  })
 }
 
 // 切换注册和登录

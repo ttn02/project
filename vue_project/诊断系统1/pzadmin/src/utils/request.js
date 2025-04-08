@@ -12,14 +12,16 @@ const http = axios.create({
 // 添加请求拦截器
 http.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
-    // 获取token信息
+    // 获取token信息保存到浏览器本地
     const token = localStorage.getItem('pz_token')
     // 不需要添加没有token的api，就是没有Header请求头
     const whiteUrl = ['get/code', '/user/authentication', '/login']
-    if (token && whiteUrl.includes(config.url)) { 
-        config.headers['X-token'] = token
-    }
-    return config;
+    // 如果有token，并且不是白名单的api，则添加Header请求头
+    if (token && !whiteUrl.includes(config.url)) { 
+        // 把token添加到请求头里面的 X-token 
+          config.headers['X-token'] = token
+      }
+      return config;
   }, function (error) {
     // 对请求错误做些什么
     return Promise.reject(error);
