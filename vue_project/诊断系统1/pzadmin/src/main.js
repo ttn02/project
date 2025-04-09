@@ -3,6 +3,8 @@ import './style.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import PanelHead from './components/panelHeader.vue'
+
 // 如果使用CDN引入，请删除下面一行
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
@@ -26,6 +28,9 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+
+// 全局注册自定义组件,传入组件名称和内容
+app.component('PanelHead', PanelHead)
 
 // 挂载路由
 app.use(router)

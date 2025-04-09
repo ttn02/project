@@ -6,7 +6,7 @@ const http = axios.create({
     // 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
     // 自动给 `url` 添加前缀
     baseURL: 'https://v3pz.itndedu.com/v3pz',
-    timeout: 10000 // 添加请求超时时间
+    timeout: 30000 // 添加请求超时时间
 })
 
 // 添加请求拦截器
