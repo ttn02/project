@@ -19,7 +19,7 @@ http.interceptors.request.use(function (config) {
     // 如果有token，并且不是白名单的api，则添加Header请求头
     if (token && !whiteUrl.includes(config.url)) { 
         // 把token添加到请求头里面的 X-token 
-          config.headers['X-token'] = token
+          config.headers['x-token'] = token
       }
       return config;
   }, function (error) {
@@ -32,6 +32,15 @@ http.interceptors.response.use(function (response) {
     // 对接口异常的数据，给用户提示
     if (response.data.code === -1) {
         ElMessage.error(response.data.message)
+  }
+    // token发生修改或者是过期了
+  if (response.data.code === -2) {
+      // 清除当前的缓存记录
+    localStorage.removeItem('pz_token')
+    localStorage.removeItem('pz_userInfo')
+    // 清除完后跳转到登录页面,跳转到当前页面的一个路由(window.location.origin)
+    window.location.href = window.location.origin
+    
     }
     return response;
   }, function (error) {

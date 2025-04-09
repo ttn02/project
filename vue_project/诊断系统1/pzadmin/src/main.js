@@ -3,9 +3,22 @@ import './style.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// 如果使用CDN引入，请删除下面一行
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-
+// 前置导航守卫(to为跳转的路径，from为从哪里跳转的)
+router.beforeEach(( to,from) => {
+    // 这里可以做一些全局的前置操作，比如判断是否登录，是否有权限等
+  const token =localStorage.getItem('pz_token')
+  // 非登录页面跳转，如果token不存在且不在登录页面，则跳转到登录页面
+  if (!token && to.path !== '/login') {
+      return '/login'
+  } else if (token && to.path === '/login') { 
+      return '/'
+  } else {
+    return true
+  }
+})
 
 const app = createApp(App)
 
@@ -19,6 +32,45 @@ app.use(router)
 // 挂载vuex(store挂载)
 app.use(store)
 app.mount('#app')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // 首屏优化

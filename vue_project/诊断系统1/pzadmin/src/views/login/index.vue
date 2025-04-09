@@ -22,6 +22,7 @@
         </el-link>
       </div>
       <el-form
+        ref="loginFormRef"
         :model="loginForm"
         style="max-width: 600px"
         class="demo-ruleForm"
@@ -65,7 +66,7 @@
           <el-button
             type="primary"
             :style="{ width: '100%' }"
-            @click="submitForm"
+            @click="submitForm(loginFormRef)"
           >
             {{ formType ? '立即注册' : '立即登录' }}
 
@@ -79,8 +80,11 @@
 <script setup>
 import { UserFilled, Lock } from '@element-plus/icons-vue'
 import { ref, reactive } from 'vue'
-import { getCode } from '../../api'
+import { getCode, login, userAuthentication } from '../../api'
 import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 // console.log('@@@@@@@@@@@ElMessage', ElMessage.success('成功'))
 // 通过vite插件动态获取图片路径（官方文档：https://cn.vite.dev/guide/assets.html#importing-asset-as-url）
@@ -88,6 +92,8 @@ const imgUrl = new URL('../../../public/login-head.png', import.meta.url).href
 
 // 切换表单(0注册，1登录)
 const formType = ref(0)
+
+const loginFormRef = ref()
 
 // 表单数据,对应后端接口参数
 const loginForm = reactive({
@@ -194,7 +200,44 @@ const rules = reactive({
   ]
 })
 
-const submitForm = () => { }
+// 用户没有输入账号密码时，点击立即登录和立即注册按钮触发表单校验
+const submitForm = async (formEl) => {
+  if (!formEl) return
+  // 手动触发表单校验
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      console.log('submit!', loginForm)
+      // 注册页面
+      if (formType.value) {
+        userAuthentication(loginForm).then(({ data }) => {
+          if (data.code === 10000) {
+            ElMessage.success('注册成功，请登录')
+            formType.value = 0
+          }
+        }
+        )
+      } else {
+        // 登录页面
+        login(loginForm).then(({ data }) => {
+          if (data.code === 10000) {
+            ElMessage.success('登录成功!')
+            console.log('登录成功', data)
+            // 将token和用户信息缓存到浏览器，存入localStorage
+            localStorage.setItem('pz_token', data.data.token)
+            // userInfo是一个对象类型，需要转成json字符串存入localStorage
+            localStorage.setItem('pz_userInfo', JSON.stringify(data.data.userInfo))
+            router.push('/')
+          }
+        })
+
+      }
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
+
+
+}
 
 </script>
 <style lang="less" scoped>
