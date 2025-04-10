@@ -54,6 +54,7 @@
         v-model="dialogFormvisible"
         :before-close="beforeClose"
         title="添加权限"
+        width="500"
     >
         <el-form
             ref="formRef"

@@ -14,7 +14,7 @@ export const login = (data) => {
     return request.post('/login',data)
 }
 
-// 权限管理列表,该接口需要传入pageNum和pageSize参数,同时需要携带token
+// 账号管理列表,该接口需要传入pageNum和pageSize参数,同时需要携带token
 export const authAdmin = (params) => {
     // params传入一个对象，包含两个参数
     return request.get('/auth/admin',{params})
@@ -34,4 +34,16 @@ export const userSetMenu = (data) => {
 export const menuList = (params) => {
     // params传入一个对象，包含两个参数
     return request.get('/menu/list',{params})
+}
+
+// 权限下拉列表
+export const menuSelectList = () => {
+    // 不需要传递参数,获取下拉列表
+    return request.get('/menu/selectlist')
+}
+
+// 用户数据修改
+export const updateUser = (data) => { 
+    // data传入一个对象，包含两个参数（）
+    return request.post('/update/user',data)
 }
