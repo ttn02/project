@@ -39,18 +39,16 @@
             </ul>
         </div>
         <div class="header-right">
-            <el-dropdown>
+            <!-- 下拉菜单点事件触发@command -->
+            <el-dropdown @command="handleClick">
                 <div class="el-droopdown-link flex-box">
                     <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
                     <p class="user-name">TTN</p>
                 </div>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item>Action 1</el-dropdown-item>
-                        <el-dropdown-item>Action 2</el-dropdown-item>
-                        <el-dropdown-item>Action 3</el-dropdown-item>
-                        <el-dropdown-item disabled>Action 4</el-dropdown-item>
-                        <el-dropdown-item divided>Action 5</el-dropdown-item>
+                        <el-dropdown-item command="cancel">退出登录</el-dropdown-item>
+                        <el-dropdown-item command="1">Action 2</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
@@ -68,8 +66,21 @@ const store = useStore()
 
 // 通过useRoute获取当前路由
 const route = useRoute()
+
 // 通过useRouter获取路由实例
 const router = useRouter()
+
+// 定义下拉菜单点击事件
+const handleClick = (command) => {
+    if (command === 'cancel') {
+        // 登出逻辑，清除浏览器localStorage的pz_token和用户信息pz_userInfo
+        localStorage.removeItem('pz_token')
+        localStorage.removeItem('pz_userInfo')
+        // 路由守卫检测到没有token，跳转到登录页
+        window.location.href = window.location.origin
+
+    }
+}
 
 //  通过计算属性
 const selectMenu = computed(() => store.state.menu.selectMenu)

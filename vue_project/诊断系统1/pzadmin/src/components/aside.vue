@@ -30,13 +30,16 @@ import { useStore } from 'vuex'
 
 const router = useRouter()
 // console.log('router@@@@@@@@@@@@@', router);
-const menuData = reactive(router.options.routes[0].children)
-// console.log('menuData@@@@@@@@@@@@@@@@@', menuData);
 
 // 创建 store 实例
 const store = useStore()
 const isCollapse = computed(() => store.state.menu.isCollapse)
 
+// 一开始的路由数据写死的，在使用动态路由后，后面改成从 store 里获取
+// const menuData = reactive(router.options.routes[0].children)
+// 使用动态路由后
+const menuData = computed(() => store.state.menu.routerList)
+// console.log('menuData@@@@@@@@@@@@@@@@@', menuData);
 
 const handleOpen = () => { }
 const handleClose = () => { }

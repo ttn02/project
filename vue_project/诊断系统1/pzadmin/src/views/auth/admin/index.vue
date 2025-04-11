@@ -219,7 +219,7 @@ const handleCurrentChange = (val) => {
 
 // 关闭弹窗的方法
 const beforeClose = () => {
-
+    dialogFormVisible.value = false
 }
 
 // 请求列表的封装

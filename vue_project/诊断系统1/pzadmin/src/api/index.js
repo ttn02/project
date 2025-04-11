@@ -47,3 +47,9 @@ export const updateUser = (data) => {
     // data传入一个对象，包含两个参数（）
     return request.post('/update/user',data)
 }
+
+// 用户菜单权限
+export const menuPermission = () => {
+    // 不需要传递参数,获取下拉列表
+    return request.get('/menu/permissions')
+}

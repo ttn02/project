@@ -79,12 +79,14 @@
 </template>
 <script setup>
 import { UserFilled, Lock } from '@element-plus/icons-vue'
-import { ref, reactive } from 'vue'
-import { getCode, login, userAuthentication } from '../../api'
+import { ref, reactive, computed, toRaw } from 'vue'
+import { getCode, login, userAuthentication, menuPermission } from '../../api'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 const router = useRouter()
+const store = useStore()
 
 // console.log('@@@@@@@@@@@ElMessage', ElMessage.success('成功'))
 // 通过vite插件动态获取图片路径（官方文档：https://cn.vite.dev/guide/assets.html#importing-asset-as-url）
@@ -108,6 +110,9 @@ const countdown = reactive({
   validText: '获取验证码',
   time: 60,
 })
+
+// 拿到vuex中的菜单权限数据
+const routerList = computed(() => store.state.menu.routerList)
 
 // 定义flag变量，检测用户是否点击了获取验证码
 let flag = false
@@ -226,7 +231,21 @@ const submitForm = async (formEl) => {
             localStorage.setItem('pz_token', data.data.token)
             // userInfo是一个对象类型，需要转成json字符串存入localStorage
             localStorage.setItem('pz_userInfo', JSON.stringify(data.data.userInfo))
-            router.push('/')
+            // 调用一个获取权限的接口，获取用户菜单权限，权限足够时，跳转到首页
+            menuPermission().then(({ data }) => {
+              // console.log('@@@@@@@@@@@menuPermission', data)
+              // 将用户菜单权限的数据data.data存入vuex中，供其他页面使用
+              store.commit('dynamicMenu', data.data)
+              // 成功拿到数据之后，设置动态路由
+              console.log('@@@@@@@@@@@routerList', routerList)
+              // 将相应路由数据转化为普通路由数据
+              toRaw(routerList.value).forEach(item => {
+                // 进行动态路由的添加，只保留主路由，其他可以注释掉
+                router.addRoute('main', item)
+              })
+              router.push('/')
+            })
+
           }
         })
 
