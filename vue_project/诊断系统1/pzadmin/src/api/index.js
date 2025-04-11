@@ -53,3 +53,16 @@ export const menuPermission = () => {
     // 不需要传递参数,获取下拉列表
     return request.get('/menu/permissions')
 }
+
+// 陪护师头像
+export const photoList = () => {
+    // 不需要传递参数获取陪护师头像
+    return request.get('/photo/list')
+}
+
+// 陪护师创建
+export const companion = (data) => {
+    // 上传七个数据
+    return request.post('/companion',data)
+}
+
