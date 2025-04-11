@@ -76,6 +76,7 @@ const handleClick = (command) => {
         // 登出逻辑，清除浏览器localStorage的pz_token和用户信息pz_userInfo
         localStorage.removeItem('pz_token')
         localStorage.removeItem('pz_userInfo')
+        localStorage.removeItem('pz_v3pz')
         // 路由守卫检测到没有token，跳转到登录页
         window.location.href = window.location.origin
 

@@ -1,6 +1,6 @@
 <template>
     <!-- 使用在main.js中全局配置的PanelHead组件(写成小驼峰和单标签) -->
-    <panel-head />
+    <panel-head :route="route" />
     <div class="btns">
         <el-button
             :icon="Plus"
@@ -111,6 +111,9 @@
 import { ref, reactive, onMounted, nextTick } from 'vue'
 import { userGetMenu, userSetMenu, menuList } from '../../../api'
 import { Plus } from '@element-plus/icons-vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 // 树形菜单权限数据
 const permissionData = ref([])

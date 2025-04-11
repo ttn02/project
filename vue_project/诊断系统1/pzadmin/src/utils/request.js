@@ -38,6 +38,7 @@ http.interceptors.response.use(function (response) {
       // 清除当前的缓存记录
     localStorage.removeItem('pz_token')
     localStorage.removeItem('pz_userInfo')
+    localStorage.removeItem('pz_v3pz')
     // 清除完后跳转到登录页面,跳转到当前页面的一个路由(window.location.origin)
     window.location.href = window.location.origin
     

@@ -8,6 +8,15 @@ import PanelHead from './components/panelHeader.vue'
 // 如果使用CDN引入，请删除下面一行
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
+// 刷新后动态路由添加,同时把本地存储的字符串解析为json对象，然后遍历添加路由
+const localData = JSON.parse(localStorage.getItem('pz_v3pz'))
+if (localData) {
+  store.commit('dynamicMenu', localData.menu.routerList)
+  store.state.menu.routerList.forEach(item => {
+    router.addRoute('main',item)
+  })
+}
+
 // 前置导航守卫(to为跳转的路径，from为从哪里跳转的)
 router.beforeEach(( to,from) => {
     // 这里可以做一些全局的前置操作，比如判断是否登录，是否有权限等

@@ -1,4 +1,5 @@
 <template>
+    <panel-head :route="route" />
     <el-table
         :data="tableData.list"
         type="width: 100%"
@@ -136,6 +137,7 @@
 // 该接口需要传入pageNum和pageSize参数,同时需要携带token
 import { authAdmin, menuSelectList, updateUser } from '../../../api'
 import { ref, reactive, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 // 引入处理时间戳的插件
 import dayjs from 'dayjs'
 
@@ -177,6 +179,9 @@ const rules = reactive({
     name: [{ required: true, message: '请填写昵称', trigger: 'blur' }],
     permissions_id: [{ required: true, message: '请选择菜单权限', trigger: 'blur' }]
 })
+
+// 拿到当前路由实例
+const route = useRoute()
 
 // 方法和函数----------------------------------------------------
 onMounted(() => {
