@@ -4,11 +4,11 @@
     active-text-color="#ffd04b"
     background-color="#545c64"
     class="aside-container"
-    default-active="2"
     text-color="#fff"
     @open="handleOpen"
     @close="handleClose"
     :collapse="isCollapse"
+    :default-active="active"
   >
     <p class="loge-lg">{{ isCollapse ? 'TTN' : 'TTN陪诊' }}</p>
     <TreeMenu
@@ -40,6 +40,8 @@ const isCollapse = computed(() => store.state.menu.isCollapse)
 // 使用动态路由后
 const menuData = computed(() => store.state.menu.routerList)
 // console.log('menuData@@@@@@@@@@@@@@@@@', menuData);
+
+const active = computed(() => store.state.menu.menuActive)
 
 const handleOpen = () => { }
 const handleClose = () => { }

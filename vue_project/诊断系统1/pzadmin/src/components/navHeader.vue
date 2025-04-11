@@ -15,13 +15,12 @@
                     :class="{ selected: route.path === item.path }"
                     class="tab flex-box"
                 >
-                    <!-- 便利meta里面的图标，用component标签渲染出来 -->
+                    <!-- 遍历meta里面的图标，用component标签渲染出来 -->
                     <el-icon size="15">
                         <component :is="item.icon" />
-
                     </el-icon>
                     <router-link
-                        class="text flex-box"
+                        class="flex-box text"
                         :to="{ path: item.path }"
                     >
                         {{ item.name }}
@@ -42,8 +41,9 @@
             <!-- 下拉菜单点事件触发@command -->
             <el-dropdown @command="handleClick">
                 <div class="el-droopdown-link flex-box">
-                    <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-                    <p class="user-name">TTN</p>
+                    <!-- 通过路由，动态获取头像和用户名称 -->
+                    <el-avatar :src="userInfo.avatar" />
+                    <p class="user-name">{{ userInfo.name }}</p>
                 </div>
                 <template #dropdown>
                     <el-dropdown-menu>
@@ -69,6 +69,9 @@ const route = useRoute()
 
 // 通过useRouter获取路由实例
 const router = useRouter()
+
+// 设置头像动态信息
+const userInfo = JSON.parse(localStorage.getItem('pz_userInfo'))
 
 // 定义下拉菜单点击事件
 const handleClick = (command) => {

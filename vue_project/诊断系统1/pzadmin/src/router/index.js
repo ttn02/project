@@ -8,25 +8,31 @@ import Order from '../views/vppz/order/index.vue'
 import Staff from '../views/vppz/staff/index.vue'
 import Dashboard from '../views/dashboard/index.vue'
 
+const localData = localStorage.getItem('pz_v3pz')
+
 const routes = [
     { 
       path: '/',
       component: Layout,
-    //   redirect: to => {
-    //     if (localStorage.getItem('v3pz')) {
-    //       // 是否有二级菜单
-    //       const child = JSON.parse(localStorage.getItem('v3pz')).menu.routerList[0].children
-    //       if (child) {
-    //         return child[0].meta.path
-    //       } else {
-    //         return JSON.parse(localStorage.getItem('v3pz')).menu.routerList[0].meta.path
-    //       }
-    //     } else {
-    //       return '/dashboard'
-    //     }
-    //   },
       name: 'main',
-      children: [
+        // 接收一个函数（to）,从动态路由里面获取路由信息，然后进行重定向到指定页面
+      redirect: to => {
+        if (localData) {
+          // 如果有子菜单
+          const child = JSON.parse(localData).menu.routerList[0].children
+          if (child) {
+            // 并且子菜单存在
+            return child[0].meta.path
+          } else {
+            return JSON.parse(localData).menu.routerList[0].meta.path
+          }
+        } else {
+          // 如果连缓存都不存在，直接跳转到根路径
+          return '/'
+          }
+        },
+    children: [
+        // 使用动态路由从后端获取路由信息则不需要固定路由
         // {
         //   path: 'dashboard',
         //   meta: { id: '1', name: '控制台', icon: 'Platform', path: '/dashboard', describe: '用于展示当前系统中的统计数据、统计报表及重要实时数据' },

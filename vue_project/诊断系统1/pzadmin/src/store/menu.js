@@ -5,7 +5,9 @@ const localData = localStorage.getItem('pz_v3pz')
 const state = localData ? localData.menu : {
     isCollapse: false,
     selectMenu: [],
-    routerList: []
+    routerList: [],
+    // 设置菜单栏的高亮部分,默认结合菜单索引
+    menuActive: '1-1'
 }
 const mutations = {
     collapseMenu(state) {
@@ -46,6 +48,10 @@ const mutations = {
         routerSet(payload)
         // 拿到完整的路由数据
         state.routerList = payload
+    },
+    updateMenuActive(state, payload) {
+        state.menuActive = payload
+        
     }
 }
 

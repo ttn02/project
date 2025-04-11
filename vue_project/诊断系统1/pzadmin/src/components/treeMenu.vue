@@ -59,6 +59,8 @@ const handleClick = (item, active) => {
   // console.log('item@@@@@@@@@@', item)
   // 把item的meta数据传到addMenu方法，在store中添加menu信息
   store.commit('addMenu', item.meta)
+  // 设置菜单栏选中高亮状态，把唯一id传进去进行更新状态
+  store.commit('updateMenuActive', active)
   router.push(item.meta.path)
 }
 
