@@ -60,6 +60,7 @@
             </template>
         </el-table-column>
     </el-table>
+    <!-- 底部分页逻辑 -->
     <div class="pagination-info">
         <el-pagination
             v-model:current-page="paginationData.pageNum"
@@ -231,7 +232,7 @@ const beforeClose = () => {
 const getListData = () => {
     authAdmin(paginationData).then(({ data }) => {
         // 传递参数到后端
-        console.log('@@@@@@@@@@@authAdmin', data)
+        // console.log('@@@@@@@@@@@authAdmin', data)
         const { list, total } = data.data
         // 格式化时间戳
         list.forEach(item => {

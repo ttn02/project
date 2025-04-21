@@ -7,7 +7,108 @@
             @click="open(null)"
             size="small"
         >新增</el-button>
+        <el-popconfirm
+            confirm-button-text="是"
+            cancel-button-text="否"
+            :icon="InfoFilled"
+            icon-color="#626AEF"
+            title="是否确认删除？"
+            @confirm="confirmEvent"
+        >
+            <template #reference>
+                <el-button
+                    :icon="Delete"
+                    type="danger"
+                    size="small"
+                >删除</el-button>
+            </template>
+
+        </el-popconfirm>
     </div>
+
+    <el-table
+        :data="tableData.list"
+        type="width: 100%"
+    >
+        <!-- 选中列表 -->
+        <el-table-column
+            type="selection"
+            width="55"
+            @seleced-change="handleSelectionChange"
+        />
+        <el-table-column
+            prop="id"
+            label="id"
+        />
+        <el-table-column
+            prop="name"
+            label="昵称"
+        />
+        <el-table-column
+            prop="permissionns_id"
+            label="所属组别"
+        >
+            <template #default="scope">
+                <el-image
+                    style="width: 50px; height:50px;"
+                    :src="scope.row.avatar"
+                />
+            </template>
+        </el-table-column>
+        <el-table-column
+            prop="sex"
+            label="性别"
+        >
+            <template #default="scope">
+                <!-- scope.row 拿到当前行的信息 -->
+                {{ scope.row.sex === 1 ? '男' : '女' }}
+            </template>
+        </el-table-column>
+        <el-table-column
+            prop="mobile"
+            label="手机号"
+        />
+        <el-table-column
+            prop="permissionns_id"
+            label="所属组别"
+        >
+            <template #default="scope">
+                <el-tag :type="scope.row.active ? 'success' : 'danger'">
+                    {{ scope.row.active ? '生效' : '失效' }}
+                </el-tag>
+            </template>
+        </el-table-column>
+        <el-table-column label="创建时间">
+            <template #default="scope">
+                <el-icon>
+                    <Clock />
+                </el-icon>
+                <span style="margin-left:10px">{{ scope.row.create_time }}</span>
+            </template>
+        </el-table-column>
+        <el-table-column label="操作">
+            <template #default="scope">
+                <el-button
+                    type="primary"
+                    @click="open(scope.row)"
+                >编辑</el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+    <div class="pagination-info">
+        <el-pagination
+            v-model:current-page="paginationData.pageNum"
+            :page-size="paginationData.pageSize"
+            :background="false"
+            size="small"
+            layout="total, prev, pager, next"
+            :total="tableData.total"
+            @size-change="handleSizeChange()"
+            @current-change="handleCurrentChange()"
+        />
+    </div>
+
+    <!-- 陪护师添加弹窗 -->
     <el-dialog
         v-model="dialogFormVisible"
         :before-close="beforeClose"
@@ -116,6 +217,8 @@
             </div>
         </template>
     </el-dialog>
+
+    <!-- 头像选择弹窗 -->
     <el-dialog
         v-model="dialogImgVisible"
         :before-close="beforeClose"
@@ -162,10 +265,10 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
-import { Plus } from '@element-plus/icons-vue'
-import { photoList, companion } from '../../../api'
+import { Clock, Delete, Plus } from '@element-plus/icons-vue'
+import { photoList, companion, companionList, deleteCompanion } from '../../../api'
 import { ElMessage } from 'element-plus'
 
 // 处理弹窗开关的逻辑
@@ -207,6 +310,23 @@ const fileList = ref([])
 // 选中的图片上面有个绿色小勾
 const selectItem = ref(0)
 
+// 用于存储分页数据
+const paginationData = reactive({
+    // 当前的页码
+    pageNum: 1,
+    // 每页显示的数量
+    pageSize: 10,
+})
+
+// 列表数据
+const tableData = reactive({
+    list: [],
+    total: 0
+})
+
+// 存储删除后的陪诊师数据
+const selectTableData = ref([])
+
 
 // ------------------------------------------------------------------
 
@@ -216,6 +336,7 @@ onMounted(() => {
         // console.log('@@@@@@@@@@@@@@@photoList', data)
         fileList.value = data.data
     })
+    getListData()
 })
 
 // 点击关闭弹窗
@@ -236,8 +357,10 @@ const confirm = async (formRef) => {
                     ElMessage.success('提交成功');
                     // 关闭弹窗,清空表单
                     beforeClose()
+                    // 刷新列表
+                    getListData()
                 } else {
-                    ElMessage.console.error(data.message);
+                    ElMessage.error(data.message);
                 }
             })
         } else {
@@ -246,8 +369,16 @@ const confirm = async (formRef) => {
     })
 }
 
-const open = () => {
+const open = (rowData = {}) => {
     dialogFormVisible.value = true
+    // form表单生成和编辑属于一个异步的过程,当数据回显的时候，需要等待数据回来后，再渲染表单
+    nextTick(() => {
+        // 如果是编辑，进行数据回显
+        if (rowData) {
+            Object.assign(form, rowData)
+        }
+
+    })
 }
 
 // 确认选择头像按钮
@@ -258,7 +389,55 @@ const confirmImg = () => {
     dialogImgVisible.value = false
 }
 
+const getListData = () => {
+    companionList(paginationData).then(({ data }) => {
+        // 传递参数到后端
+        console.log('@@@@@@@@@@@companionList', data)
+        const { list, total } = data.data
+        tableData.list = list
+        tableData.total = total
+    })
+}
 
+// 选中列表的回调
+const handleSelectionChange = () => {
+
+}
+
+// 点击页码的一个回调
+const handleSizeChange = (val) => {
+    paginationData.pageSize = val
+    // 调用列表的接口
+    getListData()
+}
+
+// 当前页的回调
+const handleCurrentChange = (val) => {
+    paginationData.pageNum = val.map(item => ({ id: item.id }))
+    getListData()
+
+}
+
+// 点击删除按钮的回调
+const confirmEvent = () => {
+    // 如果说当前选择的数据不存在的话，或者没有选择数据，提示用户选择至少一项
+    if (selectTableData.value.length === 0) {
+        return ElMessage.error('请选择至少一项数据')
+    }
+    deleteCompanion({ id: selectTableData.value }).then(({ data }) => {
+        // 如果请求成功
+        if (data.code === 10000) {
+            ElMessage.success('删除成功')
+            // 更新列表数据
+            getListData()
+        }
+    })
+}
+
+// 点击把删除后的数据传到selectTableData进行存储
+const heandleSelectioChange = (val) => {
+    selectTableData.value = val
+}
 
 </script>
 

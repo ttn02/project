@@ -26,10 +26,10 @@ const mutations = {
         state.selectMenu.splice(index, 1)
     },
     dynamicMenu(state, payload) {
-        console.log('@@@@@@@@@@@@@@@@@@payload',payload)
+        // console.log('@@@@@@@@@@@@@@@@@@payload',payload)
         // 通过glob导入文件,**代表多少级目录，*代表文件名（对照自己目录结构进行分配）
         const modules = import.meta.glob('../views/**/**/*.vue')
-        console.log('@@@@@@@@@@@modules', modules)
+        // console.log('@@@@@@@@@@@modules', modules)
         function routerSet(router) {
             // 遍历路由,判断是否有子菜单
             router.forEach(route => {
