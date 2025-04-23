@@ -5,6 +5,8 @@
  * @LastEditors: ttn_02
  * @LastEditTime: 2025-05-22 22:08:06
  */
+
+// 用户相关的小仓库
 import { defineStore } from 'pinia'
 import router from '@/router'
 import { reqLogin, reqUserInfo, reqLogOut } from '@/api/user'
@@ -55,7 +57,7 @@ const useUserStore = defineStore('User', {
       // error=>error.message
       if (res.code === 200) {
         this.token = res.data as string
-        // 持久化
+        // 持久化，SET_TOKEN自定义封装在utils/token.ts中
         SET_TOKEN(res.data as string)
         return 'ok'
       } else {
@@ -100,6 +102,7 @@ const useUserStore = defineStore('User', {
       }
     },
   },
+  // 计算属性
   getters: {},
 })
 

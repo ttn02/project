@@ -1,5 +1,6 @@
 export const getTime = () => {
   let msg = ''
+  // 获取当前小时数
   let hours = new Date().getHours()
   if (hours <= 9) {
     msg = '早上'

@@ -7,6 +7,7 @@
  */
 // 登录接口需要携带参数ts类型
 export interface LoginFormData {
+  // 登录成功则需要携带token，失败则不需要
   username?: string
   password?: string
 }

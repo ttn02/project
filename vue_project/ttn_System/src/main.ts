@@ -24,5 +24,6 @@ isHasButton(app)
 // 注册全局组件，直接使用install方法
 app.use(globalComponent)
 app.use(router)
+// 安装仓库
 app.use(pinia)
 app.mount('#app')

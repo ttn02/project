@@ -77,6 +77,7 @@ import Identify from '@/components/VerifyCode/index.vue'
 
 let $router = useRouter()
 let $route = useRoute()
+// 用于登陆时登录按钮的转圈圈加载效果
 let loading = ref(false)
 
 const identifyCode = ref('1234')
@@ -140,8 +141,11 @@ const validatorVerifyCode = (rule: any, value: any, callback: any) => {
   }
 }
 
+// 点击登录需要做的事情
+// 1. 通知仓库发请求、请求成功跳转首页、请求失败错误提示
 const login = async () => {
   await loginForms.value.validate()
+  // 点击登录按钮时，按钮转圈圈加载效果
   loading.value = true
   try {
     await useStore.userLogin(loginForm)
@@ -151,10 +155,13 @@ const login = async () => {
     ElNotification({
       type: 'success',
       message: '登陆成功',
+      // 从工具文件夹utils/time里面封装获取当前时间，用于表示上午下午晚上
       title: `Hi, ${getTime()}好`,
     })
+    // 登录成功，按钮停止转圈圈加载效果
     loading.value = false
   } catch (error) {
+    // 登录失败，按钮停止转圈圈加载效果
     loading.value = false
     ElNotification({
       type: 'error',
@@ -164,6 +171,7 @@ const login = async () => {
 }
 
 const rules = {
+  // trigger:触发校验表单的时机 change->文本发生变化 blur->失去焦点
   username: [
     {
       trigger: 'change',
