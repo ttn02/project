@@ -8,7 +8,9 @@
 import type { App } from 'vue'
 import * as components from './components'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+// 方法名必须为 install
 const install = function (app: App) {
+  // 注册项目的全局组件
   Object.entries(components).forEach(([key, value]) => {
     app.component(key, value)
   })

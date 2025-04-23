@@ -9,19 +9,23 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import useUserStore from '@/store/modules/user'
-let request = axios.create({
-  baseURL: import.meta.env.VITE_APP_BASE_API,
+
+// create方法创建axios实例（其他配置：基础路径，超时时间）
+const request = axios.create({
+  // 基础路径
+  baseURL: import.meta.env.VITE_APP_BASE_API, // 基础路径携带/api
   timeout: 5000,
 })
 
 request.interceptors.request.use(
   (config) => {
+    // config配置对象，hearders属性请求头，经常给服务器端携带公共参数
     let userStore = useUserStore()
 
     if (userStore.token) {
       config.headers.token = userStore.token
     }
-
+    // 返回配置对象
     return config
   },
   (error) => {
@@ -30,6 +34,7 @@ request.interceptors.request.use(
 )
 
 request.interceptors.response.use(
+  // 成功的回调
   (response) => {
     if (response.status === 200) {
       return Promise.resolve(response.data)
@@ -37,8 +42,11 @@ request.interceptors.response.use(
       return Promise.reject(response.data)
     }
   },
+  // 失败的回调：处理http网络错误
   (error) => {
+    // 定义一个变量，存储错误信息
     let message = ''
+    // http状态码
     let status = error.response.status
     switch (status) {
       // 401: 未登录
@@ -61,6 +69,7 @@ request.interceptors.response.use(
         message = '服务器出现问题'
         break
       default:
+        // 其他错误，直接抛出错误提示（如：网络错误）
         message = error.response.data.message
         break
     }

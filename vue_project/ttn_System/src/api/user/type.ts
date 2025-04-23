@@ -11,6 +11,7 @@ export interface LoginFormData {
   password?: string
 }
 
+// 登录接口返回的数据类型
 export interface ResponseData {
   code?: number
   message?: string

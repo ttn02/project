@@ -21,6 +21,7 @@ import { isHasButton } from './directive/has'
 
 const app = createApp(App)
 isHasButton(app)
+// 注册全局组件，直接使用install方法
 app.use(globalComponent)
 app.use(router)
 app.use(pinia)
