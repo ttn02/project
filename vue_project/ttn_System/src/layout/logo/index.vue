@@ -1,9 +1,9 @@
 <!--
  * @Description: Stay hungry，Stay foolish
- * @Author: Huccct
- * @Date: 2023-05-20 20:34:50
- * @LastEditors: Huccct
- * @LastEditTime: 2023-05-29 09:35:48
+ * @Author: ttn_02
+ * @Date: 2025-05-22 22:08:06
+ * @LastEditors: ttn_02
+ * @LastEditTime: 2025-05-22 22:08:06
 -->
 <script setup lang="ts">
 import setting from '@/setting'
