@@ -1,9 +1,9 @@
 /*
  * @Description: Stay hungry，Stay foolish
- * @Author: Huccct
- * @Date: 2023-05-18 12:11:32
- * @LastEditors: Huccct
- * @LastEditTime: 2023-05-23 14:53:42
+ * @Author: ttn_02
+ * @Date: 2025-05-22 22:08:06
+ * @LastEditors: ttn_02
+ * @LastEditTime: 2025-05-22 22:08:06
  */
 // 二次封装axios
 import axios from 'axios'

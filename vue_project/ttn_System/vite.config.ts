@@ -1,9 +1,9 @@
 /*
  * @Description: Stay hungry，Stay foolish
- * @Author: Huccct
- * @Date: 2023-05-17 14:32:02
- * @LastEditors: Huccct
- * @LastEditTime: 2023-06-02 17:37:30
+ * @Author: ttn_02
+ * @Date: 2025-05-22 22:08:06
+ * @LastEditors: ttn_02
+ * @LastEditTime: 2025-05-22 22:08:06
  */
 import { ConfigEnv, UserConfigExport, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'

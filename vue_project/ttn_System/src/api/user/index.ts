@@ -1,9 +1,9 @@
 /*
  * @Description: Stay hungry，Stay foolish
- * @Author: Huccct
- * @Date: 2023-05-19 17:15:57
- * @LastEditors: Huccct
- * @LastEditTime: 2023-05-23 21:32:57
+ * @Author: ttn_02
+ * @Date: 2025-05-22 22:08:06
+ * @LastEditors: ttn_02
+ * @LastEditTime: 2025-05-22 22:08:06
  */
 // 统一管理用户相关接口
 import request from '@/utils/request'

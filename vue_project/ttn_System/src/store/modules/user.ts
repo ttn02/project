@@ -1,9 +1,9 @@
 /*
  * @Description: Stay hungry，Stay foolish
- * @Author: Huccct
- * @Date: 2023-05-20 10:58:16
- * @LastEditors: Huccct
- * @LastEditTime: 2023-06-02 11:27:32
+ * @Author: ttn_02
+ * @Date: 2025-05-22 22:08:06
+ * @LastEditors: ttn_02
+ * @LastEditTime: 2025-05-22 22:08:06
  */
 import { defineStore } from 'pinia'
 import router from '@/router'

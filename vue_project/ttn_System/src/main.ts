@@ -1,9 +1,9 @@
 /*
  * @Description: Stay hungry，Stay foolish
- * @Author: Huccct
- * @Date: 2023-05-17 14:32:02
- * @LastEditors: Huccct
- * @LastEditTime: 2023-05-22 22:08:06
+ * @Author: ttn_02
+ * @Date: 2025-05-22 22:08:06
+ * @LastEditors: ttn_02
+ * @LastEditTime: 2025-05-22 22:08:06
  */
 import { createApp } from 'vue'
 import App from '@/App.vue'

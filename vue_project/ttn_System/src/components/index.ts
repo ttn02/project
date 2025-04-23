@@ -1,9 +1,9 @@
 /*
  * @Description: Stay hungry，Stay foolish
- * @Author: Huccct
- * @Date: 2023-05-17 20:10:16
- * @LastEditors: Huccct
- * @LastEditTime: 2023-05-21 13:57:55
+ * @Author: ttn_02
+ * @Date: 2025-05-22 22:08:06
+ * @LastEditors: ttn_02
+ * @LastEditTime: 2025-05-22 22:08:06
  */
 import type { App } from 'vue'
 import * as components from './components'

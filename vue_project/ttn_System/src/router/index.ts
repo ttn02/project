@@ -1,9 +1,9 @@
 /*
  * @Description: Stay hungry，Stay foolish
- * @Author: Huccct
- * @Date: 2023-05-19 17:41:54
- * @LastEditors: Huccct
- * @LastEditTime: 2023-05-19 17:48:44
+ * @Author: ttn_02
+ * @Date: 2025-05-22 22:08:06
+ * @LastEditors: ttn_02
+ * @LastEditTime: 2025-05-22 22:08:06
  */
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { constantRoute } from './routes'
