@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import BreadCrumb from './breadcrumb/index.vue'
-import Setting from './setting/index.vue'
-</script>
 <template>
   <el-header style="text-align: right; font-size: 12px">
     <div class="toolbar">
@@ -14,6 +10,10 @@ import Setting from './setting/index.vue'
     </div>
   </el-header>
 </template>
+<script setup lang="ts">
+import BreadCrumb from './breadcrumb/index.vue'
+import Setting from './setting/index.vue'
+</script>
 <style lang="scss" scoped>
 .toolbar {
   display: flex;
@@ -21,11 +21,13 @@ import Setting from './setting/index.vue'
   align-items: center;
   width: 100%;
   height: 100%;
+
   .toolbar_left {
     display: flex;
     align-items: center;
     margin-left: 10px;
   }
+
   .toolbar_right {
     display: flex;
     align-items: center;

@@ -26,6 +26,7 @@ export const constantRoute = [
       hidden: false,
       icon: '',
     },
+    // 重定向 只要访问到该路由，都会进入该路由下的第一个子路由
     redirect: '/home',
     children: [
       {
@@ -70,6 +71,7 @@ export const asyncRoute = [
       hidden: false,
       icon: 'Lock',
     },
+    // 重定向 只要访问到该路由，都会进入该路由下的第一个子路由
     redirect: '/acl/user',
     children: [
       {
@@ -113,6 +115,7 @@ export const asyncRoute = [
       hidden: false,
       icon: 'Goods',
     },
+    // 重定向 只要访问到该路由，都会进入该路由下的第一个子路由
     redirect: '/product/trademark',
     children: [
       {

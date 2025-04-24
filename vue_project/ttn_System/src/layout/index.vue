@@ -19,6 +19,7 @@
       <!-- 带滚动条的菜单栏 -->
       <el-scrollbar>
         <!-- 需要限制菜单栏的高度等于 视口的高度 - logo图标的高度 -->
+        <!-- :default-active="$route.path" 当匹配到的唯一标识（这里的唯一标识为路由路径）默认打开菜单栏，刷新时直接跳转到该菜单栏的子项 -->
         <el-menu
           :default-active="$route.path"
           active-text-color="#fff"
@@ -53,11 +54,17 @@
 </template>
 
 <script setup lang="ts">
+// 引入左侧菜单logo组件
 import Logo from './logo/index.vue'
+// 引入左侧菜单栏组件
 import Menu from './menu/index.vue'
+// 引入顶部导航栏组件
 import TabBar from './tabbar/index.vue'
+// 引入右侧主要内容组件
 import Main from './main/index.vue'
+// 引入关闭菜单栏的指令相关仓库
 import useLayOutSettingStore from '@/store/modules/setting'
+// 引入用户相关仓库
 import useUserStore from '@/store/modules/user'
 import { useRoute } from 'vue-router'
 
@@ -81,6 +88,7 @@ let LayOutSettingStore = useLayOutSettingStore()
   padding: 20px;
   left: 200px;
   top: 60px;
+  // 用于设置过渡动画
   transition: all 0.3s;
   width: calc(100% - $base-menu-width);
   height: calc(100vh - 60px);

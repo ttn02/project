@@ -65,8 +65,9 @@ const useUserStore = defineStore('User', {
       }
     },
     async userInfo() {
+      // 获取用户仓库中的token信息
       const res: userInfoResponseData = await reqUserInfo()
-
+      // 如果获取用户信息成功，存储一下用户信息
       if (res.code === 200) {
         this.username = res.data.name as string
         this.avatar = res.data.avatar as string

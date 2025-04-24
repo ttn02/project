@@ -5,6 +5,7 @@
  * @LastEditors: ttn_02
  * @LastEditTime: 2025-05-22 22:08:06
  */
+// 关于layout组件的小仓库，用于展开和缩放菜单栏的状态
 import { defineStore } from 'pinia'
 
 let useLayOutSettingStore = defineStore('SettingStore', {

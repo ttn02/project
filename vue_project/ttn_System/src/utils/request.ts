@@ -19,7 +19,8 @@ const request = axios.create({
 
 request.interceptors.request.use(
   (config) => {
-    // config配置对象，hearders属性请求头，经常给服务器端携带公共参数
+    // 获取仓库内部token，登录以后携带给服务器
+    // config配置对象，hearders属性请求头，经常给服务器端携带公共参数token
     let userStore = useUserStore()
 
     if (userStore.token) {

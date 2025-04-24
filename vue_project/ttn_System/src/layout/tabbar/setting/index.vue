@@ -5,6 +5,79 @@
  * @LastEditors: ttn_02
  * @LastEditTime: 2025-05-22 22:08:06
 -->
+<template>
+  <!-- 圆形的刷新按钮 -->
+  <el-button
+    circle
+    size="small"
+    :icon="Refresh"
+    @click="updateRefsh"
+  />
+  <!-- 全屏按钮 -->
+  <el-button
+    circle
+    size="small"
+    :icon="FullScreen"
+    @click="fullScreen"
+  />
+  <el-popover
+    placement="bottom"
+    title="主题设置"
+    :width="200"
+    trigger="hover"
+  >
+    <el-form>
+      <el-form-item label="主题颜色">
+        <el-color-picker
+          v-model="color"
+          show-alpha
+          :predefine="predefineColors"
+          size="small"
+          @change="setColor"
+        />
+      </el-form-item>
+      <el-form-item label="暗黑模式">
+        <el-switch
+          v-model="dark"
+          size="small"
+          inline-prompt
+          active-icon="MoonNight"
+          inactive-icon="Sunny"
+          @change="changeDark"
+        />
+      </el-form-item>
+    </el-form>
+    <template #reference>
+      <el-button
+        circle
+        size="small"
+        :icon="Setting"
+      />
+    </template>
+  </el-popover>
+
+  <img
+    :src="userStore.avatar"
+    alt=""
+  />
+  <!-- 退出登录的下拉菜单 -->
+  <el-dropdown>
+    <span
+      class="el-dropdown-link"
+      style="cursor: pointer"
+    >
+      {{ userStore.username }}
+      <el-icon class="el-icon--right">
+        <arrow-down />
+      </el-icon>
+    </span>
+    <template #dropdown>
+      <el-dropdown-menu>
+        <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+      </el-dropdown-menu>
+    </template>
+  </el-dropdown>
+</template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import {
@@ -21,15 +94,19 @@ let $router = useRouter()
 let $route = useRoute()
 let userStore = useUserStore()
 let dark = ref<boolean>(false)
+
 const updateRefsh = () => {
   layoutSettingStore.refsh = !layoutSettingStore.refsh
 }
 
 const fullScreen = () => {
+  // DOM对象属性 判断当前是否为全屏，全屏返回true，否则返回null
   let full = document.fullscreenElement
   if (!full) {
+    // 用于设置全屏
     document.documentElement.requestFullscreen()
   } else {
+    // 用于退出全屏
     document.exitFullscreen()
   }
 }
@@ -67,51 +144,7 @@ const setColor = () => {
   html.style.setProperty('--el-color-primary', color.value)
 }
 </script>
-<template>
-  <el-button circle size="small" :icon="Refresh" @click="updateRefsh" />
-  <el-button circle size="small" :icon="FullScreen" @click="fullScreen" />
-  <el-popover placement="bottom" title="主题设置" :width="200" trigger="hover">
-    <el-form>
-      <el-form-item label="主题颜色">
-        <el-color-picker
-          v-model="color"
-          show-alpha
-          :predefine="predefineColors"
-          size="small"
-          @change="setColor"
-        />
-      </el-form-item>
-      <el-form-item label="暗黑模式">
-        <el-switch
-          v-model="dark"
-          size="small"
-          inline-prompt
-          active-icon="MoonNight"
-          inactive-icon="Sunny"
-          @change="changeDark"
-        />
-      </el-form-item>
-    </el-form>
-    <template #reference>
-      <el-button circle size="small" :icon="Setting" />
-    </template>
-  </el-popover>
 
-  <img :src="userStore.avatar" alt="" />
-  <el-dropdown>
-    <span class="el-dropdown-link" style="cursor: pointer">
-      {{ userStore.username }}
-      <el-icon class="el-icon--right">
-        <arrow-down />
-      </el-icon>
-    </span>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
-</template>
 <style lang="scss" scoped>
 img {
   width: 24px;
