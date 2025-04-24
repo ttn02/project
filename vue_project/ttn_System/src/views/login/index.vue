@@ -6,63 +6,76 @@
  * @LastEditTime: 2025-05-22 22:08:06
  -->
 <template>
-   <div class="login_container">
-     <el-row>
-       <el-col :span="12" :xs="0"></el-col>
-       <el-col :span="12" :xs="24">
-         <el-card class="login_form">
-           <h1>Vue-Admin</h1>
-           <el-form :model="loginForm" :rules="rules" ref="loginForms">
-             <el-form-item prop="username">
-               <el-input
-                 :prefix-icon="User"
-                 v-model="loginForm.username"
-                 clearable
-                 placeholder="Username"
-                 size="large"
-               ></el-input>
-             </el-form-item>
-             <el-form-item prop="password">
-               <el-input
-                 type="password"
-                 :prefix-icon="Lock"
-                 show-password
-                 v-model="loginForm.password"
-                 size="large"
-                 placeholder="Password"
-                 clearable
-               ></el-input>
-             </el-form-item>
-             <el-form-item prop="verifyCode">
-               <el-input
-                 :prefix-icon="Warning"
-                 show-password
-                 v-model="loginForm.verifyCode"
-                 placeholder="VerifyCode"
-                 size="large"
-                 maxlength="4"
-               >
-                 <template #append>
-                   <Identify :identifyCode="identifyCode" @click="refreshCode" />
-                 </template>
-               </el-input>
-             </el-form-item>
-           </el-form>
-           <el-form-item>
-             <el-button
-               :loading="loading"
-               class="login_btn"
-               type="primary"
-               size="default"
-               @click="login"
-             >
-               登录
-             </el-button>
-           </el-form-item>
-         </el-card>
-       </el-col>
-     </el-row>
-   </div>
+  <div class="login_container">
+    <el-row>
+      <el-col
+        :span="12"
+        :xs="0"
+      ></el-col>
+      <el-col
+        :span="12"
+        :xs="24"
+      >
+        <el-card class="login_form">
+          <h1>Vue-Admin</h1>
+          <el-form
+            :model="loginForm"
+            :rules="rules"
+            ref="loginForms"
+          >
+            <el-form-item prop="username">
+              <el-input
+                :prefix-icon="User"
+                v-model="loginForm.username"
+                clearable
+                placeholder="Username"
+                size="large"
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input
+                type="password"
+                :prefix-icon="Lock"
+                show-password
+                v-model="loginForm.password"
+                size="large"
+                placeholder="Password"
+                clearable
+              ></el-input>
+            </el-form-item>
+            <el-form-item prop="verifyCode">
+              <el-input
+                :prefix-icon="Warning"
+                show-password
+                v-model="loginForm.verifyCode"
+                placeholder="VerifyCode"
+                size="large"
+                maxlength="4"
+              >
+                <template #append>
+                  <Identify
+                    :identifyCode="identifyCode"
+                    @click="refreshCode"
+                  />
+                </template>
+              </el-input>
+            </el-form-item>
+          </el-form>
+          <el-form-item>
+            <el-button
+              :loading="loading"
+              class="login_btn"
+              type="primary"
+              size="default"
+              @click="login"
+            >
+              登录
+            </el-button>
+          </el-form-item>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -101,6 +114,7 @@ const randomNum = (min: number, max: number) => {
 }
 
 let useStore = useUserStore()
+// 获取el-form组件实例（里面有方法validate）
 let loginForms = ref()
 
 const loginForm = reactive({
@@ -109,6 +123,45 @@ const loginForm = reactive({
   verifyCode: '1234',
 })
 
+
+
+// 点击登录需要做的事情
+// 1. 通知仓库发请求、请求成功跳转首页、请求失败错误提示
+const login = async () => {
+  // el-form组件实例的validate方法，会返回Promise实例（resolve和reject）用于验证校验的表单是否成功和失败
+  // 等校验通过后再发请求
+  await loginForms.value.validate()
+  // 点击登录按钮时，按钮转圈圈加载效果
+  loading.value = true
+  try {
+    await useStore.userLogin(loginForm)
+    let redirect: string = $route.query.redirect as string
+    $router.push({ path: redirect || '/' })
+    $router.push('/')
+    ElNotification({
+      type: 'success',
+      message: '登陆成功',
+      // 从工具文件夹utils/time里面封装获取当前时间，用于表示上午下午晚上
+      title: `Hi, ${getTime()}好`,
+    })
+    // 登录成功，按钮停止转圈圈加载效果
+    loading.value = false
+  } catch (error) {
+    // 登录失败，按钮停止转圈圈加载效果
+    loading.value = false
+    ElNotification({
+      type: 'error',
+      message: (error as Error).message,
+    })
+  }
+}
+
+
+// 自定义校验规则函数
+// rule 校验规则对象
+// value 表单元素的文本内容
+// callback 回调函数，用于返回校验结果，
+// 如果校验通过，则调用callback()放行，否则调用callback(new Error('错误提示信息'))打印错误信息并放行
 const validatorUsername = (rule: any, value: any, callback: any) => {
   if (value.length === 0) {
     callback(new Error('请输入账号'))
@@ -140,36 +193,6 @@ const validatorVerifyCode = (rule: any, value: any, callback: any) => {
     callback()
   }
 }
-
-// 点击登录需要做的事情
-// 1. 通知仓库发请求、请求成功跳转首页、请求失败错误提示
-const login = async () => {
-  await loginForms.value.validate()
-  // 点击登录按钮时，按钮转圈圈加载效果
-  loading.value = true
-  try {
-    await useStore.userLogin(loginForm)
-    let redirect: string = $route.query.redirect as string
-    $router.push({ path: redirect || '/' })
-    $router.push('/')
-    ElNotification({
-      type: 'success',
-      message: '登陆成功',
-      // 从工具文件夹utils/time里面封装获取当前时间，用于表示上午下午晚上
-      title: `Hi, ${getTime()}好`,
-    })
-    // 登录成功，按钮停止转圈圈加载效果
-    loading.value = false
-  } catch (error) {
-    // 登录失败，按钮停止转圈圈加载效果
-    loading.value = false
-    ElNotification({
-      type: 'error',
-      message: (error as Error).message,
-    })
-  }
-}
-
 const rules = {
   // trigger:触发校验表单的时机 change->文本发生变化 blur->失去焦点
   username: [
@@ -203,6 +226,7 @@ const rules = {
   background-size: cover;
   position: fixed;
   background: url('@/assets/images/background.jpg') no-repeat;
+
   .login_form {
     // 相对于父盒子的位置进行定位
     position: relative;

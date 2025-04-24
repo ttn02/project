@@ -2,5 +2,5 @@
 export default {
   title: 'Vue-Admin',
   logo: '/logo.png',
-  logoHidden: true,
+  logoHidden: true, // logo组件是否隐藏
 }

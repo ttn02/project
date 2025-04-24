@@ -42,7 +42,7 @@ const useUserStore = defineStore('User', {
   state: (): UserState => {
     return {
       token: GET_TOKEN()!,
-      menuRoutes: constantRoute,
+      menuRoutes: constantRoute, // 生成菜单所需要的路由
       username: '',
       avatar: '',
       buttons: [],

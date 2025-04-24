@@ -5,15 +5,23 @@
  * @LastEditors: ttn_02
  * @LastEditTime: 2025-05-22 22:08:06
 -->
-<script setup lang="ts">
-import setting from '@/setting'
-</script>
 <template>
-  <div class="logo" v-if="setting.logoHidden">
-    <img :src="setting.logo" alt="" />
+  <div
+    class="logo"
+    v-if="setting.logoHidden"
+  >
+    <img
+      :src="setting.logo"
+      alt=""
+    />
     <span class="title">{{ setting.title }}</span>
   </div>
 </template>
+
+<script setup lang="ts">
+import setting from '@/setting'
+</script>
+
 <style lang="scss" scoped>
 .logo {
   width: 95%;
@@ -26,12 +34,14 @@ import setting from '@/setting'
   flex-wrap: nowrap;
   overflow: hidden;
   padding-left: 17px;
+
   img {
     display: inline-block;
     widows: 30px;
     height: 30px;
     border-radius: 10px;
   }
+
   .title {
     display: inline-block;
     height: 32px;

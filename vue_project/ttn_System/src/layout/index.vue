@@ -1,31 +1,24 @@
 <!--
  * @Description: Stay hungry，Stay foolish
- * @Author: Huccct
- * @Date: 2023-05-20 20:25:03
- * @LastEditors: Huccct
- * @LastEditTime: 2023-05-26 21:50:47
+ * @Author: ttn_02
+ * @Date: 2025-05-22 22:08:06
+ * @LastEditors: ttn_02
+ * @LastEditTime: 2025-05-22 22:08:06
 -->
-<script setup lang="ts">
-import Logo from './logo/index.vue'
-import Menu from './menu/index.vue'
-import TabBar from './tabbar/index.vue'
-import Main from './main/index.vue'
-import useLayOutSettingStore from '@/store/modules/setting'
-import useUserStore from '@/store/modules/user'
-import { useRoute } from 'vue-router'
 
-let userStore = useUserStore()
-let $route = useRoute()
-
-let LayOutSettingStore = useLayOutSettingStore()
-</script>
 <template>
-  <el-container class="layout-container-demo" style="height: 100vh">
+  <el-container
+    class="layout-container-demo"
+    style="height: 100vh"
+  >
+    <!-- 左侧菜单栏 -->
     <el-aside
       width="200px"
       :class="{ isCollapse: LayOutSettingStore.isCollapse ? true : false }"
     >
+      <!-- 带滚动条的菜单栏 -->
       <el-scrollbar>
+        <!-- 需要限制菜单栏的高度等于 视口的高度 - logo图标的高度 -->
         <el-menu
           :default-active="$route.path"
           active-text-color="#fff"
@@ -35,21 +28,22 @@ let LayOutSettingStore = useLayOutSettingStore()
           :router="true"
         >
           <Logo />
+          <!-- 根据路由动态生成菜单  -->
           <Menu :menuList="userStore.menuRoutes" />
         </el-menu>
       </el-scrollbar>
     </el-aside>
 
     <el-container class="container">
+      <!-- 顶部导航栏 -->
       <TabBar style="width: 100%" />
-      <el-main
-        :style="{
-          left: !LayOutSettingStore.isCollapse ? '200px' : '56px',
-          width: LayOutSettingStore.isCollapse
-            ? 'calc(100% - 56px)'
-            : 'calc(100% - 200px)',
-        }"
-      >
+      主要内容部分
+      <el-main :style="{
+        left: !LayOutSettingStore.isCollapse ? '200px' : '56px',
+        width: LayOutSettingStore.isCollapse
+          ? 'calc(100% - 56px)'
+          : 'calc(100% - 200px)',
+      }">
         <el-scrollbar>
           <Main />
         </el-scrollbar>
@@ -57,13 +51,31 @@ let LayOutSettingStore = useLayOutSettingStore()
     </el-container>
   </el-container>
 </template>
+
+<script setup lang="ts">
+import Logo from './logo/index.vue'
+import Menu from './menu/index.vue'
+import TabBar from './tabbar/index.vue'
+import Main from './main/index.vue'
+import useLayOutSettingStore from '@/store/modules/setting'
+import useUserStore from '@/store/modules/user'
+import { useRoute } from 'vue-router'
+
+// 从仓库里面拿到路由数据
+let userStore = useUserStore()
+let $route = useRoute()
+
+let LayOutSettingStore = useLayOutSettingStore()
+</script>
 <style lang="scss" scoped>
 .layout-container-demo {
   height: 100%;
 }
+
 .layout-container-demo .el-menu {
   border-right: none;
 }
+
 .layout-container-demo .el-main {
   position: absolute;
   padding: 20px;
@@ -78,11 +90,13 @@ let LayOutSettingStore = useLayOutSettingStore()
   background-color: #001529 !important;
   transition: all 0.3s;
 }
+
 .el-header {
   background-color: #fff !important;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
   z-index: 999;
 }
+
 .isCollapse {
   width: 56px;
 }

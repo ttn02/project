@@ -10,8 +10,10 @@ export const constantRoute = [
     path: '/login',
     component: () => import('@/views/login/index.vue'),
     name: 'login',
+    // 路由的元信息
     meta: {
       title: 'login',
+      // 该路由是否隐藏在侧边栏中（false表示显示在侧边栏中）
       hidden: true,
     },
   },
