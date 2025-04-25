@@ -1,3 +1,6 @@
+// 定义用户相关的接口类型
+
+// 定义全部接口返回数据都拥有ts类型
 export interface ResponseData {
   code: number
   message: string
