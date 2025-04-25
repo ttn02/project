@@ -89,6 +89,7 @@ const useUserStore = defineStore('User', {
     async userLogout() {
       const res = await reqLogOut()
       if (res.code === 200) {
+        // 退出登录，清除token和用户选项
         this.token = ''
         this.username = ''
         this.avatar = ''

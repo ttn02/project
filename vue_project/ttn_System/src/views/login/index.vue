@@ -135,8 +135,11 @@ const login = async () => {
   loading.value = true
   try {
     await useStore.userLogin(loginForm)
+    // 登陆时判断是否携带有query参数，有的话就往query参数跳转，没有的话就跳转到首页
+    // 业务 临时有事退出登录（保留当时路由在query参数） 再登陆回来时，会自动跳转回之前的页面
     let redirect: string = $route.query.redirect as string
     $router.push({ path: redirect || '/' })
+
     $router.push('/')
     ElNotification({
       type: 'success',

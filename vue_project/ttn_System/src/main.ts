@@ -16,6 +16,7 @@ import 'element-plus/theme-chalk/dark/css-vars.css'
 import '@/styles/index.scss'
 import router from './router'
 import pinia from './store'
+// 引入路由鉴权文件（路由守卫）
 import './permission'
 import { isHasButton } from './directive/has'
 

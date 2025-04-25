@@ -111,8 +111,15 @@ const fullScreen = () => {
   }
 }
 
+// 退出登录点击回调
 const logout = async () => {
+  // 第一件事 向服务器发请求 退出登录的接口（本次登录的token无效）
+  // 第二件事 本地清除用户信息
+  // 第三件事 跳转到登录页面
   await userStore.userLogout()
+  // 跳转到登录页面
+  // 调用 push 里面的 query 参数，当退出登录时，用 redirect 重定向到退出登录时所在的页面
+  // 在登陆login时判断有没有携带query参数，有的话就重定向到该页面
   $router.push({ path: '/login', query: { redirect: $route.path } })
 }
 
