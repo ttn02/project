@@ -12,7 +12,7 @@ export const useUserStore = defineStore('user', () => {
   const getUserInfo = async ({ account, password }) => {
     const res = await loginAPI({ account, password })
     userInfo.value = res.data.result
-    //合并购物车
+    //合并购物车（返回一个新数组）
     await mergeCartAPI(cartStore.cartList.map(item => {
       return {
         skuId: item.skuId,

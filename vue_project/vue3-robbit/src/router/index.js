@@ -18,51 +18,51 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            component: Layout,
+            component: () => import('@/views/layout/index.vue'),
             children: [
                 {
                     path: '',
-                    component: Home
+                    component: () => import('@/views/home/index.vue'),
                 },
                 {
                     path: 'category/:id',
-                    component: Category
+                    component: () => import('@/views/subCategory/index.vue')
                 },
                 {
                     path: 'category/sub/:id',
-                    component: SubCategory
+                    component: () => import('@/views/subCategory/index.vue')
                 },
                 {
                     path: 'detail/:id',
-                    component: Detail
+                    component: () => import('@/views/detail/index.vue')
                 },
                 {
                     path: 'cartlist',
-                    component: CartList
+                    component: () => import('@/views/cartList/index.vue')
                 },
                 {
                     path: 'checkout',
-                    component: CheckOut
+                    component: () => import('@/views/checkout/index.vue')
                 },
                 {
                     path: 'pay',
-                    component: Pay
+                    component: () => import('@/views/pay/index.vue')
                 },
                 {
                     path: 'paycallback',
-                    component: PayBack
+                    component: () => import('@/views/pay/PayBack.vue')
                 },
                 {
                     path: 'member',
-                    component: Member,
+                    component: () => import('@/views/member/index.vue'),
                     children: [
                         {
                             path: '',
-                            component: UserInfo
+                            component: () => import('@/views/member/components/UserInfo.vue')
                         },
                         {
                             path: 'order',
-                            component: UserOrder
+                            component: () => import('@/views/member/components/UserOrder.vue')
                         },
                     ]
                 },
@@ -70,7 +70,7 @@ const router = createRouter({
         },
         {
             path: '/login',
-            component: Login
+            component: () => import('@/views/login/index.vue')
         }
     ],
     //路由滚动行为定制

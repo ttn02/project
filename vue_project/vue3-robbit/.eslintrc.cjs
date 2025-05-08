@@ -9,7 +9,7 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules:{
-    //关闭组件命名规则
+    //关闭组件命名规则（如有多个index.vue文件）
     'vue/multi-word-component-names': 'off'
   }
 }
