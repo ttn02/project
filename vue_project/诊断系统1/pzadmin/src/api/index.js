@@ -17,7 +17,7 @@ export const login = (data) => {
 // 账号管理列表,该接口需要传入pageNum和pageSize参数,同时需要携带token
 export const authAdmin = (params) => {
     // params传入一个对象，包含两个参数
-    return request.get('/auth/admin',{params})
+    return request.get('/auth/admin',{ params })
 }
 
 // 菜单权限数据,该接口不需要传入参数,同时需要携带token
@@ -68,7 +68,7 @@ export const companion = (data) => {
 
 // 陪护师列表
 export const companionList = (params) => {
-    return request.get('/companion/list', { params})
+    return request.get('/companion/list', { params })
 }
 
 // 陪护师删除

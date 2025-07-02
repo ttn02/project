@@ -248,14 +248,11 @@ const submitForm = async (formEl) => {
 
           }
         })
-
       }
     } else {
       console.log('error submit!', fields)
     }
   })
-
-
 }
 
 </script>
